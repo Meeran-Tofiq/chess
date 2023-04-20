@@ -18,3 +18,26 @@ describe Pawn do
         end
     end
 end
+
+describe Bishop do
+    describe "#move" do
+        it "returns the position that it moves the bishop" do
+            bishop = Bishop.new([0, 0])
+            expect(bishop.move([1,1])).to eq([1, 1])
+        end
+    end
+
+    describe "#move" do
+        it "returns the new position of the bishop after a very big move" do
+            bishop = Bishop.new([0, 0])
+            expect(bishop.move([7,7])).to eq([7, 7])
+        end
+    end
+
+    describe "#move" do
+        it "returns false when trying to move it NOT along a diagonal" do
+            bishop = Bishop.new([0,0])
+            expect(bishop.move([1, 5])).to eq(false)
+        end
+    end
+end
