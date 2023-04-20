@@ -9,6 +9,7 @@ describe Pawn do
 
         it "returns false when the new destination given isn't available" do
             pawn = Pawn.new([7, 1])
-            expect(pawn.move([0, 2]).to eq(false))
+            expect(pawn.move([0, 2])).to eq((false))
+        end
     end
 end
