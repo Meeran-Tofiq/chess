@@ -41,3 +41,19 @@ describe Bishop do
         end
     end
 end
+
+describe Knight do
+    describe "#move" do
+        it "returns the position of the destination" do
+            kngiht = Kngiht.new([0, 5])
+            expect(knight.mode([1, 7])).to eq([1, 7])
+        end
+    end
+
+    describe "#move" do
+        it "returns false if the des is not possible to reach" do
+            knight = Knight.new([0, 3])
+            expect(knight.move([0, 4])).to eq(false)
+        end
+    end
+end
