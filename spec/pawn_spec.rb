@@ -6,5 +6,9 @@ describe Pawn do
             pawn = Pawn.new([0, 1])
             expect(pawn.move([0, 2])).to eq([0, 2])
         end
+
+        it "returns false when the new destination given isn't available" do
+            pawn = Pawn.new([7, 1])
+            expect(pawn.move([0, 2]).to eq(false))
     end
 end
