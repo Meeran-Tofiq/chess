@@ -21,7 +21,7 @@ end
 
 describe Bishop do
     describe "#move" do
-        it "returns the position that it moves the bishop" do
+        it "returns the position that it moves the q" do
             bishop = Bishop.new([0, 0])
             expect(bishop.move([1,1])).to eq([1, 1])
         end
@@ -67,6 +67,40 @@ describe Rook do
         it "returns the des, after a moving it's position there" do
             r = Rook.new([0, 0])
             expect(r.move([0, 7])).to eq([0,7])
+        end
+    end
+end
+
+describe Queen do
+    describe "#move" do
+        it "returns the position that it moves the bishop" do
+            q = Queen.new([0, 0])
+            expect(q.move([1,1])).to eq([1, 1])
+        end
+        
+        it "returns the new position of the bishop after a very big move" do
+            q = Queen.new([0, 0])
+            expect(q.move([7,7])).to eq([7, 7])
+        end
+        
+        it "returns false when trying to move it NOT along a diagonal" do
+            q = Queen.new([0,0])
+            expect(q.move([1, 5])).to eq(false)
+        end
+
+        it "returns the position of the detination, if des is possible" do
+            q = Queen.new([0,0])
+            expect(q.move([7,0])).to eq([7, 0])
+        end
+
+        it "returns false when the des provided is ot reachable" do
+            q = Queen.new([0,7])
+            expect(q.move([1, 1])).to eq(false)
+        end
+
+        it "returns the des, after a moving it's position there" do
+            q = Queen.new([0, 0])
+            expect(q.move([0, 7])).to eq([0,7])
         end
     end
 end
