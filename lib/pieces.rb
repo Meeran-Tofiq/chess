@@ -31,8 +31,13 @@ class Bishop < Piece
         p = t
         7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
     end
+    
     def initialize(pos)
         super(pos, @@t)
+    end
+
+    def self.t
+        @@t
     end
 end
 
@@ -49,6 +54,19 @@ class Rook < Piece
         p = t
         7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
     end
+
+    def initialize(pos)
+        super(pos, @@t)
+    end
+
+    def self.t
+        @@t
+    end
+end
+
+class Queen < Piece
+    binding.pry
+    @@t = Rook.t + Bishop.t
     def initialize(pos)
         super(pos, @@t)
     end
