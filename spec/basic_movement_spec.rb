@@ -45,8 +45,8 @@ end
 describe Knight do
     describe "#move" do
         it "returns the position of the destination" do
-            kngiht = Kngiht.new([0, 5])
-            expect(knight.mode([1, 7])).to eq([1, 7])
+            knight = Knight.new([0, 5])
+            expect(knight.move([1, 7])).to eq([1, 7])
         end
     end
 
