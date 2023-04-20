@@ -1,6 +1,8 @@
+require 'pry-byebug'
+
 class Piece
-    attr_reader :pos, :symbol
-    attr_accessor :t
+    attr_reader :symbol
+    attr_accessor :t, :pos 
     def initialize(pos, transformations = nil, symbol = "♙")
         @pos = pos
         @t = transformations
@@ -19,7 +21,7 @@ end
 class Pawn < Piece
     T = [[0, 1], [1, 1], [-1, 1]].freeze
     def initialize(pos)
-        super(pos, transformations=T[0])
+        super(pos, transformations=T[0..0])
     end
 end
 
