@@ -26,12 +26,12 @@ class Pawn < Piece
 end
 
 class Bishop < Piece
+    @@t = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
+    @@t[0..4].each do |t|
+        p = t
+        7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
+    end
     def initialize(pos)
-        @@t = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
-        @@t[0..4].each do |t|
-            p = t
-            7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
-        end
         super(pos, @@t)
     end
 end
@@ -39,6 +39,17 @@ end
 class Knight < Piece
     def initialize(pos)
         @@t = [[1, 2], [2, 1], [-1, 2], [2, -1], [-1, -2], [-2, -1], [1, -2], [-2, 1]]
+        super(pos, @@t)
+    end
+end
+
+class Rook < Piece
+    @@t = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+    @@t[0..4].each do |t|
+        p = t
+        7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
+    end
+    def initialize(pos)
         super(pos, @@t)
     end
 end
