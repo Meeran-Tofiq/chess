@@ -21,9 +21,9 @@ class Piece
 end
 
 class Pawn < Piece
-    def initialize(pos)
+    def initialize(pos, symbol)
         @@t = [[0, 1], [1, 1], [-1, 1]].freeze
-        super(pos, @@t[0..0])
+        super(pos, @@t[0..0], symbol)
     end
 end
 
@@ -34,8 +34,8 @@ class Bishop < Piece
         7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
     end
     
-    def initialize(pos)
-        super(pos, @@t)
+    def initialize(pos, symbol)
+        super(pos, @@t, symbol)
     end
 
     def self.t
@@ -46,7 +46,7 @@ end
 class Knight < Piece
     def initialize(pos)
         @@t = [[1, 2], [2, 1], [-1, 2], [2, -1], [-1, -2], [-2, -1], [1, -2], [-2, 1]]
-        super(pos, @@t)
+        super(pos, @@t, symbol)
     end
 end
 
@@ -57,8 +57,8 @@ class Rook < Piece
         7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
     end
 
-    def initialize(pos)
-        super(pos, @@t)
+    def initialize(pos, symbol)
+        super(pos, @@t, symbol)
     end
 
     def self.t
@@ -75,7 +75,7 @@ end
 
 class King < Piece
     @@t = [[1, 0], [0, 1], [1, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]]
-    def initialize(pos)
-        super(pos, @@t)
+    def initialize(pos, symbol)
+        super(pos, @@t, symbol)
     end
 end
