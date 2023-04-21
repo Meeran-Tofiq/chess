@@ -13,7 +13,7 @@ class Piece
         return false if Board.taken?(des)
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
-            new_pos == des ? (return (pos = new_pos)) : next
+            new_pos == des ? (Board.set_position(new_pos, symbol); return (pos = new_pos)) : next
         end
         false
     end
