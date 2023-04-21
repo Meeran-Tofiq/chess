@@ -1,7 +1,5 @@
 class Board
-    def initialize
-        @@layout = Array.new(8) {Array.new(8, nil)}
-    end
+    @@layout = Array.new(8) {Array.new(8, nil)}
 
     def self.taken?(pos)
         !@@layout[pos[0]][pos[1]].nil?
