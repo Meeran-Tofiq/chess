@@ -10,12 +10,14 @@ class Piece
     end
 
     def move(des)
+        return false if Board.taken?(des)
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
             new_pos == des ? (return (pos = new_pos)) : next
         end
         false
     end
+
 end
 
 class Pawn < Piece
