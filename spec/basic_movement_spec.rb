@@ -111,9 +111,7 @@ describe King do
             k = King.new([0,5])
             expect(k.move([0,6])).to eq([0, 6])
         end
-    end
-
-    describe "#move" do
+        
         it "returns false when the position provided is not somewhere the king can reach" do
             k = King.new([0, 5])
             expect(k.move([0,7])).to eq(false)
