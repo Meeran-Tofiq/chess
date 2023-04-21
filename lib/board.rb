@@ -10,4 +10,8 @@ class Board
     def self.set_position(pos, symbol)
         @@layout[pos[0]][pos[1]] = symbol
     end
+
+    def self.layout
+        @@layout
+    end
 end
