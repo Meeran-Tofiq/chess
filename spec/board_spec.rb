@@ -10,4 +10,22 @@ describe Board do
             expect(Board.layout[7][0]).to eq(nil)
         end
     end
+
+    describe ".set_position" do
+        it "sets the piece at the provided position" do
+            Board.set_position([0, 0], "P")
+            expect(Board.layout[0][0]).to eq("P")
+        end
+    end
+
+    describe ".taken?" do
+        it "returns true when the position is taken" do
+            Board.set_position([0, 0], "P")
+            expect(Board.taken?([0, 0])).to eq(true)
+        end
+
+        it "returns true when the position is taken" do
+            expect(Board.taken?([0, 6])).to eq(false)
+        end
+    end
 end
