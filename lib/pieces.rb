@@ -65,8 +65,14 @@ class Rook < Piece
 end
 
 class Queen < Piece
-    binding.pry
     @@t = Rook.t + Bishop.t
+    def initialize(pos)
+        super(pos, @@t)
+    end
+end
+
+class King < Piece
+    @@t = [[1, 0], [0, 1], [1, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]]
     def initialize(pos)
         super(pos, @@t)
     end
