@@ -5,6 +5,10 @@ class Board
         !@@layout[pos[0]][pos[1]].nil?
     end
 
+    def self.reset_board
+        @@layout = Array.new(8) {Array.new(8, nil)}
+    end
+
     def self.set_position(pos, symbol)
         @@layout[pos[0]][pos[1]] = symbol
     end
