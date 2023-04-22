@@ -21,9 +21,12 @@ class Piece
 end
 
 class Pawn < Piece
-    def initialize(pos, symbol)
-        @@t = [[0, 1], [1, 1], [-1, 1]].freeze
-        super(pos, @@t[0..0], symbol)
+    @@t = [[0, 1], [1, 1], [-1, 1]]
+    
+    attr_reader :symbol
+    def initialize(pos, side)
+        @symbol = (side == "w" ?  "♙" : "♟︎")
+        super(pos, @@t[0], symbol)
     end
 end
 
@@ -34,7 +37,9 @@ class Bishop < Piece
         7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
     end
     
-    def initialize(pos, symbol)
+    attr_reader :symbol
+    def initialize(pos, side)
+        @symbol = (side == "w" ?  "♗" : "♝")
         super(pos, @@t, symbol)
     end
 
@@ -44,8 +49,11 @@ class Bishop < Piece
 end
 
 class Knight < Piece
-    def initialize(pos)
-        @@t = [[1, 2], [2, 1], [-1, 2], [2, -1], [-1, -2], [-2, -1], [1, -2], [-2, 1]]
+    @@t = [[1, 2], [2, 1], [-1, 2], [2, -1], [-1, -2], [-2, -1], [1, -2], [-2, 1]]
+    
+    attr_reader :symbol
+    def initialize(pos, side)
+        @symbol = (side == "w" ?  "♘" : "♞")
         super(pos, @@t, symbol)
     end
 end
@@ -57,7 +65,9 @@ class Rook < Piece
         7.times { p = [p[0] + t[0], p[1] + t[1]]; @@t << p}
     end
 
-    def initialize(pos, symbol)
+    attr_reader :symbol
+    def initialize(pos, side)
+        @symbol = (side == "w" ?  "♖" : "♜")
         super(pos, @@t, symbol)
     end
 
@@ -68,14 +78,20 @@ end
 
 class Queen < Piece
     @@t = Rook.t + Bishop.t
-    def initialize(pos)
-        super(pos, @@t)
+
+    attr_reader :symbol
+    def initialize(pos, side)
+        @symbol = (side == "w" ?  "♕" : "♛")
+        super(pos, @@t, symbol)
     end
 end
 
 class King < Piece
     @@t = [[1, 0], [0, 1], [1, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]]
-    def initialize(pos, symbol)
+    
+    attr_reader :symbol
+    def initialize(pos, side)
+        @symbol = (side == "w" ?  "♔" : "♚")
         super(pos, @@t, symbol)
     end
 end
