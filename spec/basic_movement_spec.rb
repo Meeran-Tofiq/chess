@@ -74,6 +74,7 @@ end
 describe Queen do
     describe "#move" do
         it "returns the position that it moves the bishop" do
+            Board.reset_board
             q = Queen.new([0, 0], "w")
             expect(q.move([1,1])).to eq([1, 1])
         end
