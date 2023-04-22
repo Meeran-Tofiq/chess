@@ -26,7 +26,7 @@ class Pawn < Piece
     attr_reader :symbol
     def initialize(pos, side)
         @symbol = (side == "w" ?  "♙" : "♟︎")
-        super(pos, @@t[0], symbol)
+        super(pos, @@t[0..0], symbol)
     end
 end
 
