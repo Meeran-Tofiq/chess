@@ -6,12 +6,12 @@ describe Pawn do
             pawn = Pawn.new([0, 1], "w")
             expect(pawn.move([0, 2])).to eq([0, 2])
         end
-
+        
         it "returns false when the new destination given isn't available" do
             pawn = Pawn.new([7, 1], "w")
             expect(pawn.move([0, 2])).to eq(false)
         end
-
+        
         it "returns false when you try to move a pawn diagonally without taking" do
             pawn = Pawn.new([5, 1], "w")
             expect(pawn.move([6,2])).to eq(false)
@@ -27,6 +27,7 @@ describe Bishop do
         end
         
         it "returns the new position of the bishop after a very big move" do
+            Board.reset_board
             bishop = Bishop.new([0, 0], "w")
             expect(bishop.move([7,7])).to eq([7, 7])
         end
@@ -44,7 +45,7 @@ describe Knight do
             knight = Knight.new([0, 5], "w")
             expect(knight.move([1, 7])).to eq([1, 7])
         end
-
+        
         it "returns false if the des is not possible to reach" do
             knight = Knight.new([0, 3], "w")
             expect(knight.move([0, 4])).to eq(false)
@@ -60,7 +61,7 @@ describe Rook do
             expect(r.move([7,0])).to eq([7, 0])
         end
         
-        it "returns false when the des provided is ot reachable" do
+        it "returns false when the des provided is not reachable" do
             r = Rook.new([1,7], "w")
             expect(r.move([2, 1])).to eq(false)
         end
@@ -81,7 +82,7 @@ describe Queen do
         end
         
         it "returns the new position of the bishop after a very big move" do
-            q = Queen.new([0, 0], "w")
+            q = Queen.new([2, 2], "w")
             expect(q.move([7,7])).to eq([7, 7])
         end
         
