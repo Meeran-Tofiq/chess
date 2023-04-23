@@ -3,10 +3,9 @@ require 'pry-byebug'
 class Piece
     attr_reader :symbol
     attr_accessor :t, :pos
-    def initialize(pos, transformations = nil, symbol)
+    def initialize(pos)
         @pos = pos
-        @t = transformations
-        @symbol = symbol
+        Board.set_position(pos, symbol)
     end
 
     def move(des)
@@ -37,8 +36,7 @@ class Pawn < Piece
         @t = [[0, 2], [0, 1], [1, 1], [-1, 1]]
         @symbol = (side == "w" ?  "♙" : "♟︎")
         @first_move = true
-        super(pos, @t, symbol)
-        Board.set_position(pos, symbol)
+        super(pos)
     end
 
     def move(des)
@@ -64,8 +62,7 @@ class Bishop < Piece
     def initialize(pos, side)
         @t = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
         @symbol = (side == "w" ?  "♗" : "♝")
-        super(pos, @t, symbol)
-        Board.set_position(pos, symbol)
+        super(pos)
     end
 
 end
@@ -76,8 +73,7 @@ class Knight < Piece
     def initialize(pos, side)
         @t = [[1, 2], [2, 1], [-1, 2], [2, -1], [-1, -2], [-2, -1], [1, -2], [-2, 1]]
         @symbol = (side == "w" ?  "♘" : "♞")
-        super(pos, @t, symbol)
-        Board.set_position(pos, symbol)
+        super(pos)
     end
 
     def move(des)
@@ -101,8 +97,7 @@ class Rook < Piece
     def initialize(pos, side)
         @t = [[0, 1], [1, 0], [0, -1], [-1, 0]]
         @symbol = (side == "w" ?  "♖" : "♜")
-        super(pos, @t, symbol)
-        Board.set_position(pos, symbol)
+        super(pos)
     end
 end
 
@@ -112,8 +107,7 @@ class Queen < Piece
     def initialize(pos, side)
         @t = [[0, 1], [1, 0], [0, -1], [-1, 0], [1, 1], [-1, 1], [-1, -1], [1, -1]]
         @symbol = (side == "w" ?  "♕" : "♛")
-        super(pos, @t, symbol)
-        Board.set_position(pos, symbol)
+        super(pos)
     end
 end
 
@@ -124,8 +118,7 @@ class King < Piece
         @t = [[1, 0], [0, 1], [1, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]]
         @symbol = (side == "w" ?  "♔" : "♚")
         @first_move = true
-        super(pos, @t, symbol)
-        Board.set_position(pos, symbol)
+        super(pos)
     end
 
     def move(des)
