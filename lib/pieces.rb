@@ -33,7 +33,7 @@ class Pawn < Piece
     attr_accessor :first_move
     attr_reader :pos, :symbol
     def initialize(pos, side)
-        @t = [[0, 2], [0, 1], [1, 1], [-1, 1]]
+        @t = [[2, 0], [1, 0], [1, 1], [1, -1]]
         @symbol = (side == "w" ?  "♙" : "♟︎")
         @first_move = true
         super(pos)
