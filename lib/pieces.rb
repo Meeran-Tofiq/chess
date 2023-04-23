@@ -116,10 +116,11 @@ end
 
 class King < Piece
     
-    attr_reader :pos, :symbol, :t
+    attr_reader :pos, :symbol, :t, :first_move
     def initialize(pos, side)
         @t = [[1, 0], [0, 1], [1, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]]
         @symbol = (side == "w" ?  "♔" : "♚")
+        @first_move = true
         super(pos, @t, symbol)
         Board.set_position(pos, symbol)
     end
@@ -132,6 +133,7 @@ class King < Piece
             if new_pos == des
                 Board.set_position(new_pos, symbol)
                 Board.set_empty(pos)
+                first_move = false
                 return (pos = new_pos)
             end
         end
