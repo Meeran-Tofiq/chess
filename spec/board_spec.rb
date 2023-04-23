@@ -3,7 +3,7 @@ require 'board.rb'
 describe Board do
     describe ".layout" do
         it "returns nil when trying to access a spot on the board that isn't taken" do
-            Board.reset_board
+            Board.reset
             expect(Board.layout[0][7]).to eq(nil)
         end
 
@@ -40,7 +40,7 @@ describe Board do
 
     describe ".print" do
         it "prints the correct version of the board" do
-            Board.reset_board
+            Board.reset
             q = Queen.new([0, 1], "w")
             k = King.new([2, 7], "b")
 

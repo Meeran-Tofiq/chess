@@ -5,7 +5,7 @@ class Board
         !@@layout[pos[0]][pos[1]].nil?
     end
 
-    def self.reset_board
+    def self.reset
         @@layout = Array.new(8) {Array.new(8, nil)}
     end
 

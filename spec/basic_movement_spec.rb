@@ -27,7 +27,7 @@ describe Bishop do
         end
         
         it "returns the new position of the bishop after a very big move" do
-            Board.reset_board
+            Board.reset
             bishop = Bishop.new([0, 0], "w")
             expect(bishop.move([7,7])).to eq([7, 7])
         end
@@ -56,7 +56,7 @@ end
 describe Rook do
     describe "#move" do
         it "returns the position of the detination, if des is possible" do
-            Board.reset_board
+            Board.reset
             r = Rook.new([0,0], "w")
             expect(r.move([7,0])).to eq([7, 0])
         end
@@ -76,7 +76,7 @@ end
 describe Queen do
     describe "#move" do
         it "returns the position that it moves the bishop" do
-            Board.reset_board
+            Board.reset
             q = Queen.new([0, 0], "w")
             expect(q.move([1,1])).to eq([1, 1])
         end
