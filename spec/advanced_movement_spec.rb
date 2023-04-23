@@ -38,6 +38,13 @@ describe "#move" do
         expect(q.move([2, 5])).to eq(false)
         expect(q.move([2, 3])).to eq(false)
         expect(q.move([4, 5])).to eq(false)
+    end
+
+    it "lets the knight go anywhere within its range" do
+        k = Knight.new([3, 5], "w")
+        Board.print
+        expect(k.move([5, 4])).to eq([5, 4])
+        Board.print
         Board.reset
     end
 end
