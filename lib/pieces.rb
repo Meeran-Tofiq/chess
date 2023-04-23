@@ -37,13 +37,13 @@ class Pawn < Piece
         @t = [[0, 2], [0, 1], [1, 1], [-1, 1]]
         @symbol = (side == "w" ?  "♙" : "♟︎")
         @first_move = true
-        super(pos, @t[0..0], symbol)
+        super(pos, @t, symbol)
         Board.set_position(pos, symbol)
     end
 
     def move(des)
         return false if Board.taken?(des)
-        transforms = (first_move ? t[0..1] : t[0..0])
+        transforms = (first_move ? t[0..1] : t[1..1])
         transforms.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
