@@ -17,3 +17,27 @@ describe Pawn do
         end
     end
 end
+
+describe "#move" do
+    it "won't let a bishop move past a piece" do
+        b = Bishop.new([3, 3], "b")
+        p = Pawn.new([4, 4], "w")
+        Board.print
+        expect(b.move([5, 5])).to eq(false)
+    end
+
+    it "won't let a rook move past a piece" do
+        r = Rook.new([3, 4], "w")
+        Board.print
+        expect(r.move([5, 4])).to eq(false)
+    end
+
+    it "won't let the queen move past a piece" do
+        q = Queen.new([4, 3], "b")
+        Board.print
+        expect(q.move([2, 5])).to eq(false)
+        expect(q.move([2, 3])).to eq(false)
+        expect(q.move([4, 5])).to eq(false)
+        Board.reset_board
+    end
+end
