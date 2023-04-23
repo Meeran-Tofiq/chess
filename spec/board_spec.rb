@@ -14,19 +14,44 @@ describe Board do
 
     describe ".set_position" do
         it "sets the piece at the provided position" do
-            Board.set_position([0, 0], "P")
-            expect(Board.layout[0][0]).to eq("P")
+            Pawn.new([3, 3], "w")
+            expect(Board.layout[3][3]).to eq("♙")
         end
     end
 
     describe ".taken?" do
         it "returns true when the position is taken" do
-            Board.set_position([0, 0], "P")
+            Pawn.new([0, 0], "b")
             expect(Board.taken?([0, 0])).to eq(true)
         end
 
         it "returns true when the position is taken" do
             expect(Board.taken?([0, 6])).to eq(false)
+        end
+    end
+
+    describe ".set_empty" do
+        it "returns a layout that has the specified position as nil" do
+            p = Pawn.new([3, 3], "w")
+            Board.set_empty([3, 3])
+            expect(Board.layout[3][3]).to eq(nil)
+        end
+    end
+
+    describe ".print" do
+        it "prints the correct version of the board" do
+            Board.reset_board
+            q = Queen.new([0, 1], "w")
+            k = King.new([2, 7], "b")
+
+            expect(Board.print).to eq([[nil, "♕", nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil, "♚"],
+                [nil, nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil, nil]])
         end
     end
 end
