@@ -13,7 +13,27 @@ class Board
         @@layout[pos[0]][pos[1]] = symbol
     end
 
+    def self.set_empty(pos)
+        @@layout[pos[0]][pos[1]] = nil
+    end
+
     def self.layout
         @@layout
+    end
+
+    def self.print
+        @@layout.each do |row|
+            str = ""
+            puts ""
+            row.each do |piece|
+                if piece.nil?
+                    piece = "  _  " 
+                else
+                    piece = "  #{piece}  "
+                end
+                str += piece
+            end
+            puts str
+        end
     end
 end
