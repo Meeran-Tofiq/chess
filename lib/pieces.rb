@@ -31,23 +31,26 @@ class Piece
 end
 
 class Pawn < Piece
-    
+    attr_accessor :first_move
     attr_reader :pos, :symbol
     def initialize(pos, side)
-        @t = [[0, 1], [1, 1], [-1, 1]]
+        @t = [[0, 2], [0, 1], [1, 1], [-1, 1]]
         @symbol = (side == "w" ?  "♙" : "♟︎")
+        @first_move = true
         super(pos, @t[0..0], symbol)
         Board.set_position(pos, symbol)
     end
 
     def move(des)
         return false if Board.taken?(des)
-        t[0..0].each do |t|
+        transforms = (first_move ? t[0..1] : t[0..0])
+        transforms.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
             if new_pos == des
                 Board.set_position(new_pos, symbol)
                 Board.set_empty(pos)
+                first_move = false
                 return (pos = new_pos)
             end
         end
