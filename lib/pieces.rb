@@ -118,8 +118,8 @@ class Queen < Piece
 end
 
 class King < Piece
-    
-    attr_reader :pos, :symbol, :t, :first_move
+    attr_accessor :first_move
+    attr_reader :pos, :symbol, :t 
     def initialize(pos, side)
         @t = [[1, 0], [0, 1], [1, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]]
         @symbol = (side == "w" ?  "♔" : "♚")
