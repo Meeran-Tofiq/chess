@@ -55,17 +55,18 @@ end
 describe Rook do
     describe "#move" do
         it "returns the position of the detination, if des is possible" do
+            Board.reset_board
             r = Rook.new([0,0], "w")
             expect(r.move([7,0])).to eq([7, 0])
         end
-
+        
         it "returns false when the des provided is ot reachable" do
-            r = Rook.new([0,7], "w")
-            expect(r.move([1, 1])).to eq(false)
+            r = Rook.new([1,7], "w")
+            expect(r.move([2, 1])).to eq(false)
         end
-
-        it "returns the des, after a moving it's position there" do
-            r = Rook.new([0, 0], "w")
+        
+        it "returns the des, after moving it's position there" do
+            r = Rook.new([0, 1], "w")
             expect(r.move([0, 7])).to eq([0,7])
         end
     end
@@ -95,8 +96,8 @@ describe Queen do
         end
 
         it "returns false when the des provided is ot reachable" do
-            q = Queen.new([0,7], "w")
-            expect(q.move([1, 1])).to eq(false)
+            q = Queen.new([1, 7], "w")
+            expect(q.move([2, 1])).to eq(false)
         end
 
         it "returns the des, after a moving it's position there" do
