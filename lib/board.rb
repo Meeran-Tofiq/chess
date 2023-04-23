@@ -36,4 +36,8 @@ class Board
             puts str
         end
     end
+
+    def self.out_of_bounds?(pos)
+        pos[0] > 7 || pos[1] > 7 || pos[0] < 0 || pos[1] < 0
+    end
 end
