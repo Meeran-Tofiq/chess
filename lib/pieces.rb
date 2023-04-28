@@ -9,6 +9,15 @@ class Piece
     end
 
     def move(des)
+        if can_move_to?(des)
+            Board.set_position(des, symbol)
+            Board.set_empty(pos)
+            return (pos = des)
+        end
+        false
+    end
+
+    def can_move_to?(des)
         return false if Board.taken?(des)
         t.each do |t|
             new_pos = pos
@@ -39,7 +48,7 @@ class Pawn < Piece
         super(pos)
     end
 
-    def move(des)
+    def can_move_to?(des)
         return false if Board.taken?(des)
         transforms = (first_move ? t[0..1] : t[1..1])
         transforms.each do |t|
@@ -76,7 +85,7 @@ class Knight < Piece
         super(pos)
     end
 
-    def move(des)
+    def can_move_to?(des)
         return false if Board.taken?(des)
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
@@ -121,7 +130,7 @@ class King < Piece
         super(pos)
     end
 
-    def move(des)
+    def can_move_to?(des)
         return false if Board.taken?(des)
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
