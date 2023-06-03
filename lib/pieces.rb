@@ -2,9 +2,10 @@ require 'pry-byebug'
 
 class Piece
     attr_reader :symbol
-    attr_accessor :t, :pos
+    attr_accessor :t, :pos, :first_move
     def initialize(pos)
         @pos = pos
+        @first_move = true
         Board.set_position(pos, symbol)
     end
 
@@ -12,6 +13,8 @@ class Piece
         if can_move_to?(des)
             Board.set_position(des, symbol)
             Board.set_empty(pos)
+            first_move = false if first_move
+
             return (pos = des)
         end
         false
@@ -44,7 +47,6 @@ class Pawn < Piece
     def initialize(pos, side)
         @t = [[2, 0], [1, 0], [1, 1], [1, -1]]
         @symbol = (side == "w" ?  "♙" : "♟︎")
-        @first_move = true
         super(pos)
     end
 
@@ -57,7 +59,6 @@ class Pawn < Piece
             if new_pos == des
                 Board.set_position(new_pos, symbol)
                 Board.set_empty(pos)
-                first_move = false
                 return (pos = new_pos)
             end
         end
@@ -126,7 +127,6 @@ class King < Piece
     def initialize(pos, side)
         @t = [[1, 0], [0, 1], [1, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]]
         @symbol = (side == "w" ?  "♔" : "♚")
-        @first_move = true
         super(pos)
     end
 
@@ -138,7 +138,6 @@ class King < Piece
             if new_pos == des
                 Board.set_position(new_pos, symbol)
                 Board.set_empty(pos)
-                first_move = false
                 return (pos = new_pos)
             end
         end
