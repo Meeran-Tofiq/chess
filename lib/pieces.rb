@@ -32,7 +32,7 @@ class Piece
                 if new_pos == des
                     Board.set_position(new_pos, symbol)
                     Board.set_empty(pos)
-                    return (pos = new_pos)
+                    return true
                 end
             end 
         end
@@ -59,7 +59,7 @@ class Pawn < Piece
             if new_pos == des
                 Board.set_position(new_pos, symbol)
                 Board.set_empty(pos)
-                return (pos = new_pos)
+                return true
             end
         end
         false
@@ -94,7 +94,7 @@ class Knight < Piece
             if new_pos == des
                 Board.set_position(new_pos, symbol)
                 Board.set_empty(pos)
-                return (pos = new_pos)
+                return true
             end
         end
         false
@@ -138,7 +138,7 @@ class King < Piece
             if new_pos == des
                 Board.set_position(new_pos, symbol)
                 Board.set_empty(pos)
-                return (pos = new_pos)
+                return true
             end
         end
         false
