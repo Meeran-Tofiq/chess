@@ -22,10 +22,10 @@ class Board
     end
 
     def self.print
-        @@layout.reverse_each do |row|
-            str = ""
-            puts ""
-            row.each do |piece|
+        (1..@@layout.length).reverse_each do |i|
+            str = "#{i}|  "
+            puts " |"
+            @@layout[i-1].each do |piece|
                 if piece.nil?
                     piece = "  _  " 
                 else
@@ -35,6 +35,7 @@ class Board
             end
             puts str
         end
+        puts "      A    B    C    D    E    F    G    H"
     end
 
     def self.out_of_bounds?(pos)
