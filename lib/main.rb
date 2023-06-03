@@ -29,12 +29,19 @@ class Game
             end
 
             des, piece_to_move, takes = get_move()
-            choice = get_player_choice(player.get_pieces_with_des(des, piece_to_move))
-            
+            choices = player.get_pieces_with_des(des, piece_to_move)
+
+            until choices.length > 0
+                puts "You have no pieces that can move to the specified location. Please try again: "
+                des, piece_to_move, takes = get_move()
+                choices = player.get_pieces_with_des(des, piece_to_move)
+            end
+
+            choice = get_player_choice(choices)
+
             if choice.move(des) == des
                 player.turn = false
                 other.turn = true
-                puts player
             end
 
             Board.print
@@ -61,7 +68,7 @@ class Game
 
         input = input.slice(-2..-1)
 
-        des = [BOARD_LETTERS.index(input[0]), NUMBERS.index(input[1].to_i)]
+        des = [NUMBERS.index(input[1].to_i), BOARD_LETTERS.index(input[0])]
 
         [des, piece_to_move, takes]
     end
