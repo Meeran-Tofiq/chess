@@ -22,7 +22,7 @@ class Board
     end
 
     def self.print
-        @@layout.each do |row|
+        @@layout.reverse_each do |row|
             str = ""
             puts ""
             row.each do |piece|
