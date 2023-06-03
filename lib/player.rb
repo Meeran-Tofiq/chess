@@ -1,4 +1,5 @@
 class Player
+    attr_accessor :turn
     attr_reader :side, :pieces
     def initialize(side = "w", turn = true)
         @side = (side == "w" ? side : "b")
