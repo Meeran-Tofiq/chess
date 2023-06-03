@@ -30,8 +30,6 @@ class Piece
                 break if Board.out_of_bounds?(new_pos) || Board.taken?(new_pos)
                 
                 if new_pos == des
-                    Board.set_position(new_pos, symbol)
-                    Board.set_empty(pos)
                     return true
                 end
             end 
@@ -57,8 +55,6 @@ class Pawn < Piece
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
             if new_pos == des
-                Board.set_position(new_pos, symbol)
-                Board.set_empty(pos)
                 return true
             end
         end
@@ -92,8 +88,6 @@ class Knight < Piece
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
             if new_pos == des
-                Board.set_position(new_pos, symbol)
-                Board.set_empty(pos)
                 return true
             end
         end
@@ -136,8 +130,6 @@ class King < Piece
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
             if new_pos == des
-                Board.set_position(new_pos, symbol)
-                Board.set_empty(pos)
                 return true
             end
         end
