@@ -10,4 +10,13 @@ describe Player do
             Board.reset
         end
     end
+
+    describe "#get_pieces_with_des" do
+        it "Returns all the pieces that can move to the provided destination" do
+            Board.reset
+            player = Player.new()
+            Board.print
+            expect(player.get_pieces_with_des([2, 2], :N)[0]).to eq(player.pieces[:N][0])
+        end
+    end
 end
