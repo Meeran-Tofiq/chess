@@ -1,5 +1,5 @@
 class Player
-    attr_reader :side
+    attr_reader :side, :pieces
     def initialize(side = "w", turn = true)
         @side = (side == "w" ? side : "b")
         @pieces = create_pieces
@@ -7,7 +7,7 @@ class Player
     end
 
     def create_pieces
-        first_line, second_line = (side == "w" ? [7, 6] : [0, 1])
+        first_line, second_line = (side == "w" ? [0, 1] : [7, 6])
 
         h = Hash.new(6)
 
@@ -17,6 +17,8 @@ class Player
         h[:R] = create_piece_type(Rook, first_line, [0, 7])
         h[:N] = create_piece_type(Knight, first_line, [1, 6])
         h[:B] = create_piece_type(Bishop, first_line, [2, 5])
+
+        h
     end
 
     def create_piece_type(p_class, row, col)
@@ -27,6 +29,18 @@ class Player
             arr << piece
         end
 
+        arr
+    end
+
+    def get_pieces_with_des(des, type)
+        arr = []
+
+        pieces[type].each do |piece|
+            if piece.can_move_to?(des)
+                arr << piece
+            end
+        end
+        
         arr
     end
             
