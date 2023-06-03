@@ -19,6 +19,8 @@ class Player
         h[:N] = create_piece_type(Knight, first_line, [1, 6])
         h[:B] = create_piece_type(Bishop, first_line, [2, 5])
 
+        h[:P].each { |pawn| pawn.reverse_pawn_direction } if side == "b"
+
         h
     end
 

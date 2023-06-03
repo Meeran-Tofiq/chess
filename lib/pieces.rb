@@ -15,7 +15,7 @@ class Piece
             Board.set_empty(pos)
             first_move = false if first_move
 
-            return (pos = des)
+            return (@pos = des)
         end
         false
     end
@@ -40,7 +40,7 @@ class Piece
 end
 
 class Pawn < Piece
-    attr_accessor :first_move
+    attr_accessor :first_move, :t
     attr_reader :pos, :symbol
     def initialize(pos, side)
         @t = [[2, 0], [1, 0], [1, 1], [1, -1]]
@@ -59,6 +59,12 @@ class Pawn < Piece
             end
         end
         false
+    end
+
+    def reverse_pawn_direction
+        @t.each do |transform|
+            transform[0] = transform[0] * (-1)
+        end
     end
 end
 
