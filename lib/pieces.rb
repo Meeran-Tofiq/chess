@@ -53,7 +53,9 @@ class Pawn < Piece
         transforms.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
-            return true if new_pos = des
+            if new_pos == des
+                return true
+            end
         end
         false
     end
@@ -89,7 +91,9 @@ class Knight < Piece
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
-            return true if new_pos == des
+            if new_pos == des
+                return true
+            end
         end
         false
     end
@@ -128,7 +132,9 @@ class King < Piece
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
-            return true if new_pos == des
+            if new_pos == des
+                return true
+            end
         end
         false
     end
