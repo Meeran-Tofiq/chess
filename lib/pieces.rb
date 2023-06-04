@@ -10,6 +10,7 @@ class Piece
     end
 
     def move(des)
+        return false if Board.taken?(des)
         if can_move_to?(des)
             Board.set_position(des, symbol)
             Board.set_empty(pos)
@@ -21,7 +22,6 @@ class Piece
     end
 
     def can_move_to?(des)
-        return false if Board.taken?(des)
         t.each do |t|
             new_pos = pos
             7.times do |_|
@@ -49,14 +49,11 @@ class Pawn < Piece
     end
 
     def can_move_to?(des)
-        return false if Board.taken?(des)
         transforms = (first_move ? t[0..1] : t[1..1])
         transforms.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
-            if new_pos == des
-                return true
-            end
+            return true if new_pos = des
         end
         false
     end
@@ -89,13 +86,10 @@ class Knight < Piece
     end
 
     def can_move_to?(des)
-        return false if Board.taken?(des)
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
-            if new_pos == des
-                return true
-            end
+            return true if new_pos == des
         end
         false
     end
@@ -131,13 +125,10 @@ class King < Piece
     end
 
     def can_move_to?(des)
-        return false if Board.taken?(des)
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
-            if new_pos == des
-                return true
-            end
+            return true if new_pos == des
         end
         false
     end
