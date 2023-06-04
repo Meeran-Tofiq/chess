@@ -14,7 +14,8 @@ class Piece
         if can_move_to?(des)
             Board.set_position(des, symbol)
             Board.set_empty(pos)
-            first_move = false if first_move
+            @first_move = false
+            puts first_move
 
             return (@pos = des)
         end
@@ -40,7 +41,7 @@ class Piece
 end
 
 class Pawn < Piece
-    attr_accessor :first_move, :t
+    attr_accessor :t
     attr_reader :pos, :symbol
     def initialize(pos, side)
         @t = [[2, 0], [1, 0], [1, 1], [1, -1]]
