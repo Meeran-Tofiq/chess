@@ -9,6 +9,12 @@ class Piece
         Board.set_position(pos, symbol)
     end
 
+    def take(des)
+        return false unless Board.taken?
+        Board.set_empty(des)
+        move(des)
+    end
+
     def move(des)
         return false if Board.taken?(des)
         if can_move_to?(des)
@@ -57,6 +63,27 @@ class Pawn < Piece
             if new_pos == des
                 return true
             end
+        end
+        false
+    end
+
+    def can_take?
+        return false unless Board.taken?
+        transforms = t[2..3]
+        transforms.each do |t|
+            new_pos = [pos[0] + t[0], pos[1] + t[1]]
+
+            if new_pos == des
+                return true
+            end
+        end
+        false
+    end
+
+    def take(des)
+        if can_take?
+            Board.set_empty(des)
+            move(des)
         end
         false
     end
