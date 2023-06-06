@@ -35,12 +35,20 @@ class Player
         arr
     end
 
-    def get_pieces_with_des(des, type)
+    def get_pieces_with_des(des, type, takes)
         arr = []
 
-        pieces[type].each do |piece|
-            if piece.can_move_to?(des)
-                arr << piece
+        if takes && type == :P
+            pieces[type].each do |piece|
+                if piece.can_take?(des)
+                    arr << piece
+                end
+            end
+        else
+            pieces[type].each do |piece|
+                if piece.can_move_to?(des)
+                    arr << piece
+                end
             end
         end
         
