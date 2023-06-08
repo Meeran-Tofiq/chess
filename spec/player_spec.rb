@@ -16,7 +16,7 @@ describe Player do
             Board.reset
             player = Player.new()
             Board.print
-            expect(player.get_pieces_with_des([2, 2], :N)[0]).to eq(player.pieces[:N][0])
+            expect(player.get_pieces_with_des([2, 2], :N, false)[0]).to eq(player.pieces[:N][0])
         end
     end
 end
