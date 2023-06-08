@@ -44,6 +44,10 @@ class Piece
         false
     end
 
+    def to_s
+        return symbol
+    end
+
 end
 
 class Pawn < Piece

@@ -29,15 +29,22 @@ class Game
             end
 
             des, piece_to_move, takes = get_move()
-            choices = player.get_pieces_with_des(des, piece_to_move)
+            binding.pry
+            choices = player.get_pieces_with_des(des, piece_to_move, takes)
 
             until choices.length > 0
                 puts "You have no pieces that can move to the specified location. Please try again: "
                 des, piece_to_move, takes = get_move()
-                choices = player.get_pieces_with_des(des, piece_to_move)
+                choices = player.get_pieces_with_des(des, piece_to_move, takes)
             end
-
             choice = get_player_choice(choices)
+
+            if takes
+                if choice.take(des) == des
+                    player.turn = false
+                    other.turn = true
+                end
+            end
 
             if choice.move(des) == des
                 player.turn = false
@@ -53,18 +60,18 @@ class Game
         input = gets.chomp
         takes = false
 
-        until (PIECE_LETTERS.include?(input[0]) || input.length == 2) && BOARD_LETTERS.include?(input[-2]) && NUMBERS.include?(input[-1].to_i)
+        until (PIECE_LETTERS.include?(input[0]) || input.length < 4) && BOARD_LETTERS.include?(input[-2]) && NUMBERS.include?(input[-1].to_i)
             puts "Invalid input. Try again: "
             input = gets.chomp
         end
 
-        if input.length > 2
+        if input[0].upcase == input[0]
             piece_to_move = input[0].to_sym
         else
             piece_to_move = :P
         end
 
-        takes = true if input[1] == "x"
+        takes = true if input[-3] == "x"
 
         input = input.slice(-2..-1)
 

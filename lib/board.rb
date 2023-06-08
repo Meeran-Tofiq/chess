@@ -29,7 +29,7 @@ class Board
                 if piece.nil?
                     piece = "  _  " 
                 else
-                    piece = "  #{piece}  "
+                    piece = "  #{piece.to_s}  "
                 end
                 str += piece
             end
