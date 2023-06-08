@@ -60,5 +60,9 @@ class Player
             arr.delete(piece)
         end
     end
+
+    def castle(castles)
+        return false if castles == 0
+    end
             
 end

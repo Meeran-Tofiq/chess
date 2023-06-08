@@ -20,6 +20,8 @@ class Game
         Board.print
 
         until game_end
+            moved = false
+            
             if white.turn
                 player = white
                 other = black
@@ -28,26 +30,34 @@ class Game
                 other = white
             end
 
-            des, piece_to_move, takes = get_move()
-            choices = player.get_pieces_with_des(des, piece_to_move, takes)
+            des, piece_to_move, takes, castles = get_move()
 
-            until choices.length > 0
-                puts "You have no pieces that can move to the specified location. Please try again: "
-                des, piece_to_move, takes = get_move()
+            if player.castle(castles)
+                moved = true
+            else
                 choices = player.get_pieces_with_des(des, piece_to_move, takes)
-            end
-            choice = get_player_choice(choices)
 
-            if takes
-                to_take = Board.layout(des)
-                if choice.take(des) == des
-                    other.remove_piece(to_take)
-                    player.turn = false
-                    other.turn = true
+                until choices.length > 0
+                    puts "You have no pieces that can move to the specified location. Please try again: "
+                    des, piece_to_move, takes, castles = get_move()
+                    choices = player.get_pieces_with_des(des, piece_to_move, takes)
+                end
+                choice = get_player_choice(choices)
+
+                if takes
+                    to_take = Board.layout(des)
+                    if choice.take(des) == des
+                        other.remove_piece(to_take)
+                        moved = true
+                    end
+                end
+
+                if choice.move(des) == des
+                    moved = true
                 end
             end
 
-            if choice.move(des) == des
+            if moved 
                 player.turn = false
                 other.turn = true
             end
@@ -60,10 +70,19 @@ class Game
         puts (white.turn ? "White to move: " : "Black to move: ")
         input = gets.chomp
         takes = false
+        castles = 0
 
-        until (PIECE_LETTERS.include?(input[0]) || input.length < 4) && BOARD_LETTERS.include?(input[-2]) && NUMBERS.include?(input[-1].to_i)
+        until input_is_valid?(input)
             puts "Invalid input. Try again: "
             input = gets.chomp
+        end
+
+        if input == "O-O" || input == "O-O-O"
+            if input.length == 3
+                return [0, 0, 0, 1]
+            else
+                return [0, 0, 0, -1]
+            end
         end
 
         if input[0].upcase == input[0]
@@ -78,7 +97,7 @@ class Game
 
         des = [NUMBERS.index(input[1].to_i), BOARD_LETTERS.index(input[0])]
 
-        [des, piece_to_move, takes]
+        [des, piece_to_move, takes, castles]
     end
 
     def get_player_choice(choices)
@@ -100,6 +119,14 @@ class Game
 
             choices[input]
         end
+    end
+
+    def input_is_valid?(input)
+        return ((PIECE_LETTERS.include?(input[0]) || input.length == 2 || 
+            (input.length == 3 && input[0] == "x")) && 
+            BOARD_LETTERS.include?(input[-2]) && 
+            NUMBERS.include?(input[-1].to_i) || 
+            input == "O-O" || input == "O-O-O")
     end
 end
 
