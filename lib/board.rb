@@ -26,6 +26,8 @@ class Board
     end
 
     def self.print
+        puts "      A    B    C    D    E    F    G    H"
+        puts "  ____________________________________________"
         (1..@@layout.length).reverse_each do |i|
             str = "#{i}|  "
             puts " |"
@@ -37,8 +39,10 @@ class Board
                 end
                 str += piece
             end
+            str += "  | #{i}"
             puts str
         end
+        puts "  ____________________________________________"
         puts "      A    B    C    D    E    F    G    H"
     end
 
