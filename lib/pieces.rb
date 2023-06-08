@@ -18,10 +18,9 @@ class Piece
     def move(des)
         return false if Board.taken?(des)
         if can_move_to?(des) || can_take?(des)
-            Board.set_position(des, symbol)
+            Board.set_position(des, self)
             Board.set_empty(pos)
             @first_move = false
-            puts first_move
 
             return (@pos = des)
         end

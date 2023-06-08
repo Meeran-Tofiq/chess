@@ -29,7 +29,6 @@ class Game
             end
 
             des, piece_to_move, takes = get_move()
-            binding.pry
             choices = player.get_pieces_with_des(des, piece_to_move, takes)
 
             until choices.length > 0
@@ -40,7 +39,9 @@ class Game
             choice = get_player_choice(choices)
 
             if takes
+                to_take = Board.layout(des)
                 if choice.take(des) == des
+                    other.remove_piece(to_take)
                     player.turn = false
                     other.turn = true
                 end

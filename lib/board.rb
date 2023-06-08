@@ -9,8 +9,8 @@ class Board
         @@layout = Array.new(8) {Array.new(8, nil)}
     end
 
-    def self.set_position(pos, symbol)
-        @@layout[pos[0]][pos[1]] = symbol
+    def self.set_position(pos, piece)
+        @@layout[pos[0]][pos[1]] = piece
     end
 
     def self.set_empty(pos)
@@ -21,6 +21,10 @@ class Board
         @@layout
     end
 
+    def self.layout(pos)
+        @@layout[pos[0]][pos[1]]
+    end
+
     def self.print
         (1..@@layout.length).reverse_each do |i|
             str = "#{i}|  "
@@ -29,7 +33,7 @@ class Board
                 if piece.nil?
                     piece = "  _  " 
                 else
-                    piece = "  #{piece.to_s}  "
+                    piece = "  #{piece}  "
                 end
                 str += piece
             end
