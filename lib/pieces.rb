@@ -33,11 +33,11 @@ class Piece
             7.times do |_|
                 new_pos = [new_pos[0]+t[0], new_pos[1]+t[1]]
                 
-                break if Board.out_of_bounds?(new_pos) || Board.taken?(new_pos)
-                
                 if new_pos == des
                     return true
                 end
+                
+                break if Board.out_of_bounds?(new_pos) || Board.taken?(new_pos)
             end 
         end
         false
