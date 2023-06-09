@@ -101,5 +101,15 @@ class Player
 
         true
     end
-            
+
+    def can_pieces_check(other_king)
+        pieces.each_value do |arr|
+            arr.each do |piece|
+                if piece.can_take?(other_king.pos)
+                    return true
+                end
+            end
+        end
+        false
+    end
 end
