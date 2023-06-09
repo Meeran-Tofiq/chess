@@ -1,10 +1,11 @@
 require 'pieces.rb'
+require 'board.rb'
 
 describe Pawn do
     describe "#move" do
         it "moves the pawn when passed a correct space for movement" do
             pawn = Pawn.new([1, 0], "w")
-            expect(pawn.move([2, 0])).to eq([2, 0])
+            expect(pawn.move([2, 0])).to eq(true)
         end
         
         it "returns false when the new destination given isn't available" do
@@ -23,13 +24,13 @@ describe Bishop do
     describe "#move" do
         it "returns the position that it moves the q" do
             bishop = Bishop.new([0, 0], "w")
-            expect(bishop.move([1,1])).to eq([1, 1])
+            expect(bishop.move([1,1])).to eq(true)
         end
         
         it "returns the new position of the bishop after a very big move" do
             Board.reset
             bishop = Bishop.new([0, 0], "w")
-            expect(bishop.move([7,7])).to eq([7, 7])
+            expect(bishop.move([7,7])).to eq(true)
         end
         
         it "returns false when trying to move it NOT along a diagonal" do
@@ -43,7 +44,7 @@ describe Knight do
     describe "#move" do
         it "returns the position of the destination" do
             knight = Knight.new([0, 5], "w")
-            expect(knight.move([1, 7])).to eq([1, 7])
+            expect(knight.move([1, 7])).to eq(true)
         end
         
         it "returns false if the des is not possible to reach" do
@@ -58,7 +59,7 @@ describe Rook do
         it "returns the position of the detination, if des is possible" do
             Board.reset
             r = Rook.new([0,0], "w")
-            expect(r.move([7,0])).to eq([7, 0])
+            expect(r.move([7,0])).to eq(true)
         end
         
         it "returns false when the des provided is not reachable" do
@@ -68,7 +69,7 @@ describe Rook do
         
         it "returns the des, after moving it's position there" do
             r = Rook.new([0, 1], "w")
-            expect(r.move([0, 7])).to eq([0,7])
+            expect(r.move([0, 7])).to eq(true)
         end
     end
 end
@@ -78,12 +79,12 @@ describe Queen do
         it "returns the position that it moves the bishop" do
             Board.reset
             q = Queen.new([0, 0], "w")
-            expect(q.move([1,1])).to eq([1, 1])
+            expect(q.move([1,1])).to eq(true)
         end
         
         it "returns the new position of the bishop after a very big move" do
             q = Queen.new([2, 2], "w")
-            expect(q.move([7,7])).to eq([7, 7])
+            expect(q.move([7,7])).to eq(true)
         end
         
         it "returns false when trying to move it NOT along a diagonal" do
@@ -93,7 +94,7 @@ describe Queen do
 
         it "returns the position of the detination, if des is possible" do
             q = Queen.new([0,0], "w")
-            expect(q.move([7,0])).to eq([7, 0])
+            expect(q.move([7,0])).to eq(true)
         end
 
         it "returns false when the des provided is ot reachable" do
@@ -103,7 +104,7 @@ describe Queen do
 
         it "returns the des, after a moving it's position there" do
             q = Queen.new([0, 0], "w")
-            expect(q.move([0, 7])).to eq([0,7])
+            expect(q.move([0, 7])).to eq(true)
         end
     end
 end
@@ -112,7 +113,7 @@ describe King do
     describe "#move" do
         it "returns the position the king moves to" do
             k = King.new([0,5], "w")
-            expect(k.move([0,6])).to eq([0, 6])
+            expect(k.move([0,6])).to eq(true)
         end
         
         it "returns false when the position provided is not somewhere the king can reach" do
