@@ -63,6 +63,41 @@ class Player
 
     def castle(castles)
         return false if castles == 0
+
+        king = pieces[:K][0]
+        if castles == 1
+            rook = pieces[:R][1]
+            puts Board.get_piece_at([king.pos[0], king.pos[1] + 1])
+            if (!Board.taken?([king.pos[0], king.pos[1] + 1]) && 
+                !Board.taken?([king.pos[0], king.pos[1] + 2]) &&
+                rook.first_move && 
+                king.first_move)
+                rook.move([rook.pos[0], rook.pos[1] - 2])
+                Board.set_empty(king.pos)
+                king.pos = [king.pos[0], king.pos[1] + 2]
+                Board.set_position(king.pos, king)
+            else
+                puts "You cannot castle king's side."
+                return false
+            end
+        elsif castles == -1
+            rook = pieces[:R][0]
+            if (!Board.taken?([king.pos[0], king.pos[1] - 1]) && 
+                !Board.taken?([king.pos[0], king.pos[1] - 2]) &&
+                !Board.taken?([king.pos[0], king.pos[1] - 3]) &&
+                rook.first_move && 
+                king.first_move)
+                rook.move([rook.pos[0], rook.pos[1] + 3])
+                Board.set_empty(king.pos)
+                king.pos = [king.pos[0], king.pos[1] - 2]
+                Board.set_position(king.pos, king)
+            else
+                puts "You cannot castle queen's side."
+                return false
+            end
+        end
+
+        true
     end
             
 end
