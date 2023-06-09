@@ -14,12 +14,16 @@ class Piece
         if can_take?(des)
             Board.set_empty(des)
             change_pos_to(des)
+            @pos = des
+            return true
         end
+        false
     end
 
     def move(des)
         if can_move_to?(des)
             change_pos_to(des)
+            @pos = des
             return true
         end
         false
