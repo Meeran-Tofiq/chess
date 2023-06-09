@@ -21,7 +21,7 @@ class Game
 
         until game_end
             moved = false
-            
+
             if white.turn
                 player = white
                 other = black
@@ -32,8 +32,15 @@ class Game
 
             des, piece_to_move, takes, castles = get_move()
 
-            if player.castle(castles)
-                moved = true
+            if castles != 0
+                binding.pry
+                until castles == 0 || player.castle(castles)
+                    des, piece_to_move, take, castles = get_move()
+                end
+                if castles != 0
+                    moved = true
+                    puts moved
+                end
             else
                 choices = player.get_pieces_with_des(des, piece_to_move, takes)
 
@@ -45,7 +52,7 @@ class Game
                 choice = get_player_choice(choices)
 
                 if takes
-                    to_take = Board.layout(des)
+                    to_take = Board.piece_at(des)
                     if choice.take(des) == des
                         other.remove_piece(to_take)
                         moved = true
