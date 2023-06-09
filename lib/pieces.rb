@@ -6,7 +6,7 @@ class Piece
     def initialize(pos)
         @pos = pos
         @first_move = true
-        Board.set_position(pos, symbol)
+        Board.set_position(pos, self)
     end
 
     def take(des)
