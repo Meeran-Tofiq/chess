@@ -11,23 +11,38 @@ class Piece
 
     def take(des)
         return false unless Board.taken?(des)
-        Board.set_empty(des)
-        move(des)
+        if can_take?(des)
+            Board.set_empty(des)
+            change_pos_to(des)
+        end
     end
 
     def move(des)
-        return false if Board.taken?(des)
-        if can_move_to?(des) || can_take?(des)
-            Board.set_position(des, self)
-            Board.set_empty(pos)
-            @first_move = false
-
-            return (@pos = des)
+        if can_move_to?(des)
+            change_pos_to(des)
+            return true
         end
         false
     end
 
     def can_move_to?(des)
+        return false if Board.taken?(des)
+        t.each do |t|
+            new_pos = pos
+            7.times do |_|
+                new_pos = [new_pos[0]+t[0], new_pos[1]+t[1]]
+                
+                break if Board.out_of_bounds?(new_pos) || Board.taken?(new_pos)
+
+                if new_pos == des
+                    return true
+                end
+            end 
+        end
+        false
+    end
+
+    def can_take?(des)
         t.each do |t|
             new_pos = pos
             7.times do |_|
@@ -41,6 +56,12 @@ class Piece
             end 
         end
         false
+    end
+
+    def change_pos_to(des)
+        Board.set_position(des, self)
+        Board.set_empty(pos)
+        @first_move = false
     end
 
     def to_s
@@ -110,6 +131,18 @@ class Knight < Piece
     end
 
     def can_move_to?(des)
+        return false if Board.taken?(des)
+        t.each do |t|
+            new_pos = [pos[0] + t[0], pos[1] + t[1]]
+
+            if new_pos == des
+                return true
+            end
+        end
+        false
+    end
+
+    def can_take?(des)
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
@@ -151,6 +184,18 @@ class King < Piece
     end
 
     def can_move_to?(des)
+        return false if Board.taken?(des)
+        t.each do |t|
+            new_pos = [pos[0] + t[0], pos[1] + t[1]]
+
+            if new_pos == des
+                return true
+            end
+        end
+        false
+    end
+
+    def can_take?(des)
         t.each do |t|
             new_pos = [pos[0] + t[0], pos[1] + t[1]]
 
