@@ -64,7 +64,7 @@ class Player
     end
 
     def castle(castles)
-        return false if castles == 0
+        return false if castles == 0 || in_check
 
         king = pieces[:K][0]
         if castles == 1
