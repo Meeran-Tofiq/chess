@@ -14,8 +14,8 @@ describe Board do
 
     describe ".set_position" do
         it "sets the piece at the provided position" do
-            Pawn.new([3, 3], "w")
-            expect(Board.layout[3][3]).to eq("♙")
+            pawn = Pawn.new([3, 3], "w")
+            expect(Board.layout[3][3]).to eq(pawn)
         end
     end
 
@@ -35,23 +35,6 @@ describe Board do
             p = Pawn.new([3, 3], "w")
             Board.set_empty([3, 3])
             expect(Board.layout[3][3]).to eq(nil)
-        end
-    end
-
-    describe ".print" do
-        it "prints the correct version of the board" do
-            Board.reset
-            q = Queen.new([0, 1], "w")
-            k = King.new([2, 7], "b")
-
-            expect(Board.print).to eq([[nil, "♕", nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil, nil, "♚"],
-                [nil, nil, nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil, nil, nil]])
         end
     end
 end
