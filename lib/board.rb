@@ -20,6 +20,10 @@ class Board
     def self.layout
         @@layout
     end
+    
+    def self.layout=(layout)
+        @@layout = layout
+    end
 
     def self.get_piece_at(pos)
         @@layout[pos[0]][pos[1]]
