@@ -52,7 +52,7 @@ class Game
                 choice = get_player_choice(choices)
 
                 if takes
-                    to_take = Board.piece_at(des)
+                    to_take = Board.get_piece_at(des)
                     if choice.take(des) == des
                         other.remove_piece(to_take)
                         moved = true
