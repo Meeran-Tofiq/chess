@@ -31,6 +31,7 @@ class Game
             end
 
             des, piece_to_move, takes, castles = get_move()
+            binding.pry
 
             if castles != 0
                 until castles == 0 || player.castle(castles)
@@ -120,10 +121,10 @@ class Game
 
             until input < choices.length && input > 0
                 puts "Invalic input. Try again: "
-                input = gets.chomp
+                input = gets.chomp.to_i
             end
 
-            choices[input]
+            choices[input - 1]
         end
     end
 
