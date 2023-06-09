@@ -1,12 +1,12 @@
 require 'pieces.rb'
-
+require 'board.rb'
 
 describe Pawn do
     describe "#move" do
         it "allows pawn to move 2 spaces, if it's its first move" do
             Board.reset
             p = Pawn.new([1, 0], "w")
-            expect(p.move([3, 0])).to eq([3, 0])
+            expect(p.move([3, 0])).to eq(true)
         end
 
         it "doesn't allow pawn to move 2 spaces, after its first move" do
@@ -42,9 +42,7 @@ describe "#move" do
 
     it "lets the knight go anywhere within its range" do
         k = Knight.new([3, 5], "w")
-        Board.print
-        expect(k.move([5, 4])).to eq([5, 4])
-        Board.print
+        expect(k.move([5, 4])).to eq(true)
         Board.reset
     end
 end
