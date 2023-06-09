@@ -1,10 +1,12 @@
 class Player
-    attr_accessor :turn
-    attr_reader :side, :pieces
+    attr_accessor :turn, :in_check
+    attr_reader :side, :pieces, :king
     def initialize(side = "w", turn = true)
         @side = (side == "w" ? side : "b")
         @pieces = create_pieces
         @turn = turn
+        @in_check = false
+        @king = pieces[:K][0]
     end
 
     def create_pieces
