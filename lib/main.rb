@@ -33,7 +33,6 @@ class Game
             des, piece_to_move, takes, castles = get_move()
 
             if castles != 0
-                binding.pry
                 until castles == 0 || player.castle(castles)
                     des, piece_to_move, take, castles = get_move()
                 end
@@ -53,13 +52,13 @@ class Game
 
                 if takes
                     to_take = Board.get_piece_at(des)
-                    if choice.take(des) == des
+                    if choice.take(des)
                         other.remove_piece(to_take)
                         moved = true
                     end
                 end
 
-                if choice.move(des) == des
+                if choice.move(des)
                     moved = true
                 end
             end
