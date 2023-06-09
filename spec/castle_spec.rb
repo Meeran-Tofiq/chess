@@ -11,7 +11,6 @@ describe Player do
                 choice = player.get_pieces_with_des(des_arr[i], piece_arr[i], false)[0]
                 choice.move(des_arr[i])
             end
-            Board.print
             expect(player.castle(1)).to eq(true)
         end
 
@@ -26,8 +25,7 @@ describe Player do
                 choice.move(des_arr[i])
             end
             expect(player.castle(-1)).to eq(true)
-            puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            Board.print
+            Board.reset
         end
     end
 end
