@@ -30,8 +30,9 @@ class Game
                 other = white
             end
 
-            des, piece_to_move, takes, castles = get_move()
-            binding.pry
+            player.in_check = other.can_pieces_check(player.king)
+
+            des, piece_to_move, takes, castles = get_move(player.in_check)
 
             if castles != 0
                 until castles == 0 || player.castle(castles)
@@ -49,8 +50,9 @@ class Game
                     des, piece_to_move, takes, castles = get_move()
                     choices = player.get_pieces_with_des(des, piece_to_move, takes)
                 end
-                choice = get_player_choice(choices)
 
+                choice = get_player_choice(choices)
+                
                 if takes
                     to_take = Board.get_piece_at(des)
                     if choice.take(des)
@@ -73,8 +75,9 @@ class Game
         end
     end
 
-    def get_move
-        puts (white.turn ? "White to move: " : "Black to move: ")
+    def get_move(in_check)
+        str = (in_check ? "You are in check! " : "")
+        puts "#{str}#{(white.turn ? "White to move: " : "Black to move: ")}"
         input = gets.chomp
         takes = false
         castles = 0
