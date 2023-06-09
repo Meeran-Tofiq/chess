@@ -1,6 +1,6 @@
 class Player
-    attr_accessor :turn, :in_check
-    attr_reader :side, :pieces, :king
+    attr_accessor :turn, :in_check, :pieces
+    attr_reader :side, :king
     def initialize(side = "w", turn = true)
         @side = (side == "w" ? side : "b")
         @pieces = create_pieces
@@ -40,7 +40,7 @@ class Player
     def get_pieces_with_des(des, type, takes)
         arr = []
 
-        if takes && type == :P
+        if takes
             pieces[type].each do |piece|
                 if piece.can_take?(des)
                     arr << piece
