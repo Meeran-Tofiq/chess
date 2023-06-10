@@ -7,6 +7,10 @@ PIECE_LETTERS = ["K", "Q", "B", "N", "R"]
 BOARD_LETTERS = ["a", "b", "c", "d", "e", "f", "g", "h"]
 NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8]
 
+def deep_copy(o)
+    Marshal.load(Marshal.dump(o))
+  end
+
 class Game
     attr_accessor :white, :black, :game_end
     def initialize
@@ -36,33 +40,53 @@ class Game
 
             if castles != 0
                 until castles == 0 || player.castle(castles)
-                    des, piece_to_move, take, castles = get_move()
+                    des, piece_to_move, take, castles = get_move(player.in_check)
                 end
                 if castles != 0
                     moved = true
                     puts moved
                 end
             else
-                choices = player.get_pieces_with_des(des, piece_to_move, takes)
-
-                until choices.length > 0
-                    puts "You have no pieces that can move to the specified location. Please try again: "
-                    des, piece_to_move, takes, castles = get_move()
-                    choices = player.get_pieces_with_des(des, piece_to_move, takes)
-                end
-
-                choice = get_player_choice(choices)
+                layout = deep_copy(Board.layout)
+                player_pieces = deep_copy(player.pieces)
+                other_pieces = deep_copy(other.pieces)
                 
-                if takes
-                    to_take = Board.get_piece_at(des)
-                    if choice.take(des)
-                        other.remove_piece(to_take)
+                loop do
+                    choices = player.get_pieces_with_des(des, piece_to_move, takes)
+                    
+                    until choices.length > 0
+                        puts "You have no pieces that can move to the specified location. Please try again: "
+                        des, piece_to_move, takes, castles = get_move(player.in_check)
+                        choices = player.get_pieces_with_des(des, piece_to_move, takes)
+                    end
+                    
+                    choice = get_player_choice(choices)
+                    
+                    if takes
+                        to_take = Board.get_piece_at(des)
+                        if choice.take(des)
+                            other.remove_piece(to_take)
+                            moved = true
+                        end
+                    end
+                    
+                    if choice.move(des)
                         moved = true
                     end
-                end
+                    
+                    still_in_check = other.can_pieces_check(player.king)
+                    
+                    if still_in_check
+                        player.pieces = player_pieces.clone
+                        other.pieces = other_pieces.clone
+                        Board.layout = layout.clone
+                        puts "You are under check, you must move to stop being under check"
+                        des, piece_to_move, take, castles = get_move(player.in_check)
+                    else
+                        break
+                    end
 
-                if choice.move(des)
-                    moved = true
+                    break unless player.in_check
                 end
             end
 
