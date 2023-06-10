@@ -1,16 +1,18 @@
 require 'pry-byebug'
 
 class Piece
-    attr_reader :symbol
+    attr_reader :symbol, :side
     attr_accessor :t, :pos, :first_move
-    def initialize(pos)
+    def initialize(pos, side)
         @pos = pos
         @first_move = true
+        @side = side
         Board.set_position(pos, self)
     end
 
     def take(des)
-        return false unless Board.taken?(des)
+        return false unless (Board.taken?(des) &&
+                            Board.get_piece_at(des).side != @side)
         if can_take?(des)
             Board.set_empty(des)
             change_pos_to(des)
@@ -80,7 +82,7 @@ class Pawn < Piece
     def initialize(pos, side)
         @t = [[2, 0], [1, 0], [1, 1], [1, -1]]
         @symbol = (side == "w" ?  "♙" : "♟︎")
-        super(pos)
+        super(pos , side)
     end
 
     def can_move_to?(des)
@@ -120,7 +122,7 @@ class Bishop < Piece
     def initialize(pos, side)
         @t = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
         @symbol = (side == "w" ?  "♗" : "♝")
-        super(pos)
+        super(pos , side)
     end
 
 end
@@ -131,7 +133,7 @@ class Knight < Piece
     def initialize(pos, side)
         @t = [[1, 2], [2, 1], [-1, 2], [2, -1], [-1, -2], [-2, -1], [1, -2], [-2, 1]]
         @symbol = (side == "w" ?  "♘" : "♞")
-        super(pos)
+        super(pos , side)
     end
 
     def can_move_to?(des)
@@ -164,7 +166,7 @@ class Rook < Piece
     def initialize(pos, side)
         @t = [[0, 1], [1, 0], [0, -1], [-1, 0]]
         @symbol = (side == "w" ?  "♖" : "♜")
-        super(pos)
+        super(pos , side)
     end
 end
 
@@ -174,7 +176,7 @@ class Queen < Piece
     def initialize(pos, side)
         @t = [[0, 1], [1, 0], [0, -1], [-1, 0], [1, 1], [-1, 1], [-1, -1], [1, -1]]
         @symbol = (side == "w" ?  "♕" : "♛")
-        super(pos)
+        super(pos , side)
     end
 end
 
@@ -184,7 +186,7 @@ class King < Piece
     def initialize(pos, side)
         @t = [[1, 0], [0, 1], [1, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]]
         @symbol = (side == "w" ?  "♔" : "♚")
-        super(pos)
+        super(pos , side)
     end
 
     def can_move_to?(des)
