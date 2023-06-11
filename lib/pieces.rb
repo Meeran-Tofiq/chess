@@ -212,3 +212,12 @@ class King < Piece
         false
     end
 end
+
+class Ghost < Piece
+    attr_reader :pawn, :side, :pos
+    def initialize(pos, side, pawn)
+        @pawn = pawn
+        @symbol = "G"
+        super(pos, side)
+    end
+end
