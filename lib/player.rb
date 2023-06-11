@@ -115,4 +115,14 @@ class Player
         end
         false
     end
+
+    def remove_ghosts
+        pieces[:P].each do |pawn|
+            unless pawn.ghost == nil
+                Board.set_empty(pawn.ghost.pos)
+                pawn.ghost = nil
+            end
+        end
+    end
+
 end

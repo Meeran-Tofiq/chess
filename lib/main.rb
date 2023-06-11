@@ -34,6 +34,8 @@ class Game
                 other = white
             end
 
+            player.remove_ghosts
+
             player.in_check = other.can_pieces_check(player.king)
 
             des, piece_to_move, takes, castles = get_move(player.in_check)
