@@ -148,7 +148,7 @@ class Game
 
             input = gets.chomp.to_i
 
-            until input < choices.length && input > 0
+            until input < choices.length + 1 && input > 0
                 puts "Invalic input. Try again: "
                 input = gets.chomp.to_i
             end
