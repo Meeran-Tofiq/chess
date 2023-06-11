@@ -76,7 +76,7 @@ class Piece
 end
 
 class Pawn < Piece
-    attr_accessor :t
+    attr_accessor :t, :ghost
     attr_reader :pos, :symbol
     def initialize(pos, side)
         @t = [[2, 0], [1, 0], [1, 1], [1, -1]]
@@ -91,7 +91,7 @@ class Pawn < Piece
 
             if new_pos == des
                 if tr == t[0]
-                    g = Ghost.new([new_pos[0] - t[1][0], new_pos[1]], side, self)
+                    @ghost = Ghost.new([new_pos[0] - t[1][0], new_pos[1]], side, self)
                 end
                 return true
             end
