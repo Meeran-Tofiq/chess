@@ -92,7 +92,7 @@ class Pawn < Piece
 
             if new_pos == des
                 if tr == t[0]
-                    g = Ghost.new([new_pos[0] + t[1][0], new_pos[1]], side, self)
+                    g = Ghost.new([new_pos[0] - t[1][0], new_pos[1]], side, self)
                 end
                 return true
             end
