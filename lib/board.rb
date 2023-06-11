@@ -2,7 +2,8 @@ class Board
     @@layout = Array.new(8) {Array.new(8, nil)}
 
     def self.taken?(pos)
-        !@@layout[pos[0]][pos[1]].nil?
+        piece = @@layout[pos[0]][pos[1]]
+        !(piece.nil? || piece.class == Ghost)
     end
 
     def self.reset
