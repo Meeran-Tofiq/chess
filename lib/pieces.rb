@@ -87,10 +87,13 @@ class Pawn < Piece
 
     def can_move_to?(des)
         transforms = (first_move ? t[0..1] : t[1..1])
-        transforms.each do |t|
-            new_pos = [pos[0] + t[0], pos[1] + t[1]]
+        transforms.each do |tr|
+            new_pos = [pos[0] + tr[0], pos[1] + tr[1]]
 
             if new_pos == des
+                if tr == t[0]
+                    g = Ghost.new([new_pos[0] + t[1][0], new_pos[1]], side, self)
+                end
                 return true
             end
         end
