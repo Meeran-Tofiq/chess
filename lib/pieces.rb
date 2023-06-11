@@ -16,7 +16,6 @@ class Piece
         if can_take?(des)
             Board.set_empty(des)
             change_pos_to(des)
-            @pos = des
             return true
         end
         false
@@ -25,7 +24,6 @@ class Piece
     def move(des)
         if can_move_to?(des)
             change_pos_to(des)
-            @pos = des
             return true
         end
         false
@@ -68,6 +66,7 @@ class Piece
         Board.set_position(des, self)
         Board.set_empty(pos)
         @first_move = false
+        @pos = des
     end
 
     def to_s
@@ -110,6 +109,19 @@ class Pawn < Piece
             end
         end
         false
+    end
+
+    def take(des)
+        piece = Board.get_piece_at(des)
+        if piece.class == Ghost
+            return false unless can_take?(des)
+
+            Board.set_empty(piece.pawn.pos)
+            Board.set_empty(des)
+            change_pos_to(des)
+        else
+            super(des)
+        end
     end
 
     def reverse_pawn_direction
