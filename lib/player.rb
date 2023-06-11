@@ -58,6 +58,9 @@ class Player
     end
 
     def remove_piece(piece)
+        if piece.class == Ghost
+            piece = piece.pawn
+        end
         @pieces.each_value do |arr|
             arr.delete(piece)
         end
