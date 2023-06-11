@@ -14,6 +14,13 @@ class Piece
         return false unless (Board.taken?(des) &&
                             Board.get_piece_at(des).side != @side)
         if can_take?(des)
+            piece = Board.get_piece_at(des)
+
+            if piece.class == Pawn && piece.ghost != nil
+                Board.set_empty(piece.ghost.pos)
+                piece.ghost = nil
+            end
+
             Board.set_empty(des)
             change_pos_to(des)
             return true
