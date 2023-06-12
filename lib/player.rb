@@ -125,4 +125,7 @@ class Player
         end
     end
 
+    def to_s
+        return (side == "w" ? "WHITE" : "BLACK")
+    end
 end
