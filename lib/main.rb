@@ -51,6 +51,9 @@ class Game
                         puts "Opponent declines the draw"
                         des, piece_to_move, takes, castles = get_move(player.in_check)
                     end
+                elsif des == GAME_CHOICES[1]
+                    puts "#{player} has resgined, #{other} wins."
+                    return replay?
                 end
             end
 
