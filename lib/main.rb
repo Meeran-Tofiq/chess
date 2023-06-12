@@ -6,6 +6,7 @@ require 'pry-byebug'
 PIECE_LETTERS = ["K", "Q", "B", "N", "R"]
 BOARD_LETTERS = ["a", "b", "c", "d", "e", "f", "g", "h"]
 NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8]
+GAME_CHOICES = ["draw", "resign", "save"]
 
 def deep_copy(o)
     Marshal.load(Marshal.dump(o))
@@ -39,6 +40,20 @@ class Game
             player.in_check = other.can_pieces_check(player.king)
 
             des, piece_to_move, takes, castles = get_move(player.in_check)
+
+            if GAME_CHOICES.include?(des)
+                game_end = true
+                if des == GAME_CHOICES[0]
+                    if offer_draw(player)
+                        puts "It's a draw."
+                        return replay?
+                    else
+                        puts "Opponent declines the draw"
+                        des, piece_to_move, takes, castles = get_move(player.in_check)
+                    end
+                end
+            end
+
 
             if castles != 0
                 until castles == 0 || player.castle(castles)
@@ -113,6 +128,8 @@ class Game
             input = gets.chomp
         end
 
+        return input if GAME_CHOICES.include?(input)
+
         if input == "O-O" || input == "O-O-O"
             if input.length == 3
                 return [0, 0, 0, 1]
@@ -162,7 +179,32 @@ class Game
             (input.length == 3 && input[0] == "x")) && 
             BOARD_LETTERS.include?(input[-2]) && 
             NUMBERS.include?(input[-1].to_i) || 
-            input == "O-O" || input == "O-O-O")
+            input == "O-O" || input == "O-O-O" ||
+            GAME_CHOICES.include?(input))
+    end
+
+    def offer_draw(player)
+        puts "#{player} has offered a draw, do you accept or decline? (y/n)"
+        input = gets.chomp
+
+        until input == "n" || input == "y"
+            puts "Invalid input. Try again: "
+            input = gets.chomp
+        end
+
+        input == "y"
+    end
+
+    def replay?
+        puts "Do you want to play again? (y/n)"
+        input = gets.chomp
+
+        until input == "n" || input == "y"
+            puts "Invalid input. Try again: "
+            input = gets.chomp
+        end
+
+        input == "y"
     end
 end
 
