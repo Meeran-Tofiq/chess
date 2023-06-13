@@ -10,7 +10,9 @@ GAME_CHOICES = ["draw", "resign", "save"]
 
 def deep_copy(o)
     Marshal.load(Marshal.dump(o))
-  end
+end
+
+
 
 class Game
     attr_accessor :white, :black, :game_end
@@ -22,11 +24,10 @@ class Game
     end
 
     def play
-        Board.print
-
+        load_game if user_load_game?
         until game_end
             moved = false
-
+            
             if white.turn
                 player = white
                 other = black
@@ -34,6 +35,8 @@ class Game
                 player = black 
                 other = white
             end
+            
+            Board.print
 
             player.remove_ghosts
 
@@ -54,6 +57,9 @@ class Game
                 elsif des == GAME_CHOICES[1]
                     puts "#{player} has resgined, #{other} wins."
                     return replay?
+                else
+                    save_game
+                    des, piece_to_move, takes, castles = get_move(player.in_check)
                 end
             end
 
@@ -114,8 +120,6 @@ class Game
                 player.turn = false
                 other.turn = true
             end
-
-            Board.print
         end
     end
 
@@ -168,7 +172,7 @@ class Game
 
             input = gets.chomp.to_i
 
-            until input < choices.length + 1 && input > 0
+            until input <= choices.length && input > 0
                 puts "Invalic input. Try again: "
                 input = gets.chomp.to_i
             end
@@ -196,6 +200,56 @@ class Game
         end
 
         input == "y"
+    end
+
+    def save_game
+        unless Dir.exists? "saves"
+            Dir.mkdir "saves"
+        end
+
+        puts "what do you want to name the save file? "
+        input = gets.chomp
+        input = (input.length > 0 ? input : Time.now.strftime("%d_%m_%Y %H_%M"))
+
+        save = File.open("saves/".concat(input), "w+") 
+        save.write(Marshal.dump(self))
+    end
+
+    def user_load_game?
+        puts "Do you want to load a game? (y/n)"
+        input = gets.chomp
+
+        until input == "n" || input == "y"
+            puts "Invalid input. Try again: "
+            input = gets.chomp
+        end
+
+        input == "y"
+    end
+
+    def load_game
+        unless Dir.exists? "saves"
+            puts "There are no saves folder."
+            return false
+        end
+
+        saves = Dir.children("saves")
+        
+        puts "Which of these files do you want to open: "
+
+        saves.each_with_index do |file, i|
+            puts "#{i+1}- #{file}"
+        end
+
+        input = gets.chomp.to_i
+
+        until input <= saves.length && input > 0
+            puts "Invalic input. Try again: "
+            input = gets.chomp.to_i
+        end
+
+        save = File.open("saves/".concat(saves[input-1]), "r")
+        marshal_load File.binread(save)
     end
 
     def replay?
