@@ -1,15 +1,15 @@
 require 'pry-byebug'
-require 'serializable.rb'
+require_relative 'serializable.rb'
 
 class Piece
-    include Serializable
+    include BasicSerializable
     attr_reader :symbol, :side
     attr_accessor :t, :pos, :first_move
     def initialize(pos, side)
-        @pos = pos
+        @pos = pos unless pos == -1
         @first_move = true
         @side = side
-        Board.set_position(pos, self)
+        Board.set_position(pos, self) unless pos == -1
     end
 
     def take(des)
