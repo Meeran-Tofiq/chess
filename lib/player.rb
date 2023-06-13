@@ -1,4 +1,7 @@
+require 'serializable.rb'
+
 class Player
+    include Serializable
     attr_accessor :turn, :in_check, :pieces
     attr_reader :side, :king
     def initialize(side = "w", turn = true)

@@ -2,6 +2,7 @@ require '/home/meeran/repos/chess/lib/player.rb'
 require '/home/meeran/repos/chess/lib/board.rb'
 require '/home/meeran/repos/chess/lib/pieces.rb'
 require 'pry-byebug'
+require 'serializable.rb'
 
 PIECE_LETTERS = ["K", "Q", "B", "N", "R"]
 BOARD_LETTERS = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -11,8 +12,6 @@ GAME_CHOICES = ["draw", "resign", "save"]
 def deep_copy(o)
     Marshal.load(Marshal.dump(o))
 end
-
-
 
 class Game
     attr_accessor :white, :black, :game_end

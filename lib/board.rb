@@ -1,4 +1,7 @@
+require 'serializable.rb'
+
 class Board
+    include Serializable
     @@layout = Array.new(8) {Array.new(8, nil)}
 
     def self.taken?(pos)

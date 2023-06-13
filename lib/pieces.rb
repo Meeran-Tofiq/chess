@@ -1,6 +1,8 @@
 require 'pry-byebug'
+require 'serializable.rb'
 
 class Piece
+    include Serializable
     attr_reader :symbol, :side
     attr_accessor :t, :pos, :first_move
     def initialize(pos, side)
