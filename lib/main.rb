@@ -4,6 +4,31 @@ require_relative 'pieces.rb'
 require_relative 'serializable.rb'
 require 'pry-byebug'
 
+GAME_TEXT = 
+"This is a classical game of chess, wherein you try to check and then checkmate your opponent.
+To make a normal move, you write down the piece you want to move {(leave empty for pawn) => P
+-awn, R => Rook, K => King, N => Knight, Q => Queen, B => Bishop}. Like so:
+e4
+e5
+Nf3
+
+If you try to take a piece, you have to write \"x\" within it. Like so:
+xd5
+Rxf7
+Kxa3
+
+And if you want to castle, you write {king's side => O-O, queen's side => O-O-O}. Like so:
+O-O
+O-O-O
+
+If you want to save the game, draw it, or resign, you just type exactly that. Like so:
+save
+draw
+resign
+
+Drawing offer the opponent to draw, but they can just decline. You win when the opponent resi
+-gns."
+
 PIECE_LETTERS = ["K", "Q", "B", "N", "R"]
 BOARD_LETTERS = ["a", "b", "c", "d", "e", "f", "g", "h"]
 NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -64,12 +89,8 @@ class Game
 
 
             if castles != 0
-                until castles == 0 || player.castle(castles)
+                unless player.castle(castles)
                     des, piece_to_move, take, castles = get_move(player.in_check)
-                end
-                if castles != 0
-                    moved = true
-                    puts moved
                 end
             else
                 layout = deep_copy(Board.layout)
@@ -267,6 +288,8 @@ class Game
 end
 
 replay = true
+
+puts GAME_TEXT
 
 while replay
     game = Game.new
