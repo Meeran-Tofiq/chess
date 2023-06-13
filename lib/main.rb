@@ -1,7 +1,33 @@
-require '/home/meeran/repos/chess/lib/player.rb'
-require '/home/meeran/repos/chess/lib/board.rb'
-require '/home/meeran/repos/chess/lib/pieces.rb'
+require_relative 'player.rb'
+require_relative 'board.rb'
+require_relative 'pieces.rb'
+require_relative 'serializable.rb'
 require 'pry-byebug'
+
+GAME_TEXT = 
+"This is a classical game of chess, wherein you try to check and then checkmate your opponent.
+To make a normal move, you write down the piece you want to move {(leave empty for pawn) => P
+-awn, R => Rook, K => King, N => Knight, Q => Queen, B => Bishop}. Like so:
+e4
+e5
+Nf3
+
+If you try to take a piece, you have to write \"x\" within it. Like so:
+xd5
+Rxf7
+Kxa3
+
+And if you want to castle, you write {king's side => O-O, queen's side => O-O-O}. Like so:
+O-O
+O-O-O
+
+If you want to save the game, draw it, or resign, you just type exactly that. Like so:
+save
+draw
+resign
+
+Drawing offer the opponent to draw, but they can just decline. You win when the opponent resi
+-gns."
 
 PIECE_LETTERS = ["K", "Q", "B", "N", "R"]
 BOARD_LETTERS = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -11,8 +37,6 @@ GAME_CHOICES = ["draw", "resign", "save"]
 def deep_copy(o)
     Marshal.load(Marshal.dump(o))
 end
-
-
 
 class Game
     attr_accessor :white, :black, :game_end
@@ -65,12 +89,8 @@ class Game
 
 
             if castles != 0
-                until castles == 0 || player.castle(castles)
+                unless player.castle(castles)
                     des, piece_to_move, take, castles = get_move(player.in_check)
-                end
-                if castles != 0
-                    moved = true
-                    puts moved
                 end
             else
                 layout = deep_copy(Board.layout)
@@ -203,16 +223,16 @@ class Game
     end
 
     def save_game
-        unless Dir.exists? "saves"
-            Dir.mkdir "saves"
-        end
-
         puts "what do you want to name the save file? "
         input = gets.chomp
         input = (input.length > 0 ? input : Time.now.strftime("%d_%m_%Y %H_%M"))
 
-        save = File.open("saves/".concat(input), "w+") 
-        save.write(Marshal.dump(self))
+        Dir.mkdir "saves" unless Dir.exists? "saves"
+        Dir.mkdir "saves/".concat(input) unless Dir.exists? "saves/".concat(input)
+
+        save = Dir.new("saves/".concat(input))
+        File.new(File.join(save.path, "white"), "w").puts white.serialize
+        File.new(File.join(save.path, "black"), "w").puts black.serialize
     end
 
     def user_load_game?
@@ -229,7 +249,7 @@ class Game
 
     def load_game
         unless Dir.exists? "saves"
-            puts "There are no saves folder."
+            puts "There is no saves folder."
             return false
         end
 
@@ -248,8 +268,10 @@ class Game
             input = gets.chomp.to_i
         end
 
-        save = File.open("saves/".concat(saves[input-1]), "r")
-        marshal_load File.binread(save)
+        save = Dir.new("saves/".concat(saves[input-1]))
+        Board.reset
+        white.unserialize(File.open(File.join(save.path, "white"), "r").read)
+        black.unserialize(File.open(File.join(save.path, "black"), "r").read)
     end
 
     def replay?
@@ -266,6 +288,8 @@ class Game
 end
 
 replay = true
+
+puts GAME_TEXT
 
 while replay
     game = Game.new
