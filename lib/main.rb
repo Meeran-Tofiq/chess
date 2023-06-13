@@ -1,8 +1,8 @@
-require '/home/meeran/repos/chess/lib/player.rb'
-require '/home/meeran/repos/chess/lib/board.rb'
-require '/home/meeran/repos/chess/lib/pieces.rb'
+require_relative 'player.rb'
+require_relative 'board.rb'
+require_relative 'pieces.rb'
+require_relative 'serializable.rb'
 require 'pry-byebug'
-require 'serializable.rb'
 
 PIECE_LETTERS = ["K", "Q", "B", "N", "R"]
 BOARD_LETTERS = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -202,16 +202,16 @@ class Game
     end
 
     def save_game
-        unless Dir.exists? "saves"
-            Dir.mkdir "saves"
-        end
-
         puts "what do you want to name the save file? "
         input = gets.chomp
         input = (input.length > 0 ? input : Time.now.strftime("%d_%m_%Y %H_%M"))
 
-        save = File.open("saves/".concat(input), "w+") 
-        save.write(Marshal.dump(self))
+        Dir.mkdir "saves" unless Dir.exists? "saves"
+        Dir.mkdir "saves/".concat(input) unless Dir.exists? "saves/".concat(input)
+
+        save = Dir.new("saves/".concat(input))
+        File.new(File.join(save.path, "white"), "w").puts white.serialize
+        File.new(File.join(save.path, "black"), "w").puts black.serialize
     end
 
     def user_load_game?
@@ -228,7 +228,7 @@ class Game
 
     def load_game
         unless Dir.exists? "saves"
-            puts "There are no saves folder."
+            puts "There is no saves folder."
             return false
         end
 
@@ -247,8 +247,10 @@ class Game
             input = gets.chomp.to_i
         end
 
-        save = File.open("saves/".concat(saves[input-1]), "r")
-        marshal_load File.binread(save)
+        save = Dir.new("saves/".concat(saves[input-1]))
+        Board.reset
+        white.unserialize(File.open(File.join(save.path, "white"), "r").read)
+        black.unserialize(File.open(File.join(save.path, "black"), "r").read)
     end
 
     def replay?

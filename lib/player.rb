@@ -1,7 +1,10 @@
-require 'serializable.rb'
+require_relative 'serializable.rb'
+require_relative 'pieces.rb'
+
+PIECES_SYM = {:P => Pawn, :R => Rook, :K => King, :N => Knight, :Q => Queen, :B => Bishop}
 
 class Player
-    include Serializable
+    include BasicSerializable
     attr_accessor :turn, :in_check, :pieces
     attr_reader :side, :king
     def initialize(side = "w", turn = true)
@@ -130,5 +133,42 @@ class Player
 
     def to_s
         return (side == "w" ? "WHITE" : "BLACK")
+    end
+
+    def serialize
+        obj = {}
+        obj[:@pieces] =  pieces.map { |k,v| [k, v.map(&:serialize)] }.to_h
+        instance_variables.each {|var| obj[var] = instance_variable_get(var) if obj[var] == nil || var == :@king}
+        @@serializer.dump obj
+    end
+
+    def unserialize(string)
+        obj = @@serializer.parse string
+        @pieces = unserialize_pieces(obj["@pieces"])
+        puts pieces
+        king = pieces[:K][0]
+        obj.each_key do |key|
+            next if key == "@pieces" || key == "@king"
+            instance_variable_set(key, obj[key])
+        end
+        load_pieces_on_board
+    end
+
+    def unserialize_pieces(hash)
+        new_h = {}
+        hash = hash.map { |k, v| [k.to_sym, v] }.to_h
+        hash.each do |k, arr|
+            new_h[k] = Array.new if new_h[k].nil?
+            arr.each do |v|
+                piece = PIECES_SYM[k].new(-1, side)
+                piece.unserialize(v)
+                new_h[k] << piece
+            end
+        end
+        new_h
+    end
+
+    def load_pieces_on_board
+        pieces.each_value { |arr| arr.each { |v| Board.set_position(v.pos, v) } }
     end
 end
